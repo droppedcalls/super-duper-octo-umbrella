@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    
+    {% if title %}
+        <title>{{ title }} - CSCB20: Introduction to Databases and Web Applications</title>
+    {% else %}
+        <title>CSCB20: Introduction to Databases and Web Applications</title>
+    {% endif %}
+
+</head>
+<body>
+    <div class="main-columns">
+        <div class="column" id="nav-col">
+            <nav role="dropdown">
+                <input type="checkbox" id="nav-hamburger">
+                <label for="nav-hamburger" onclick></label>
+                <div class="nav-header">
+                    <h1 id="title">CSCB20</h1>
+                    <h2 id="tagline">Introduction to Databases and Web Applications</h2>
+                </div>
+                <ul class="links">
+                    <li><a href="home">Home</a></li>
+                    <li><a href="calendar">Calendar</a></li>
+                    <li><a href="news">News</a></li>
+                    <li><a href="lectures">Lectures</a></li>
+                    <li><a href="labs">Labs</a></li>
+                    <li><a href="assignments">Assignments</a></li>
+                    <li><a href="tests">Tests</a></li>
+                    <li><a href="resources">Resources</a></li>
+                    <li><a href="https://piazza.com" target="_blank">Piazza &#8599;</a></li>
+                    <li><a href="https://markus.utsc.utoronto.ca/" target="_blank">Markus &#8599;</a></li>
+                    <li><a href="feedback">Anon Feedback</a></li>
+                    <li></li>
+                </ul>
+            </nav>
+        </div>
+    
+        <div class="column" id="content-col">
+            <div class="login-status">
+                Hello, <b>{{ session['username'][1] }}</b> <a href="/logout">Logout</a>
+            </div>
+            <div class="content">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p><a href="https://web.cs.toronto.edu" target="_blank">CS @ UofT</a> | Site design by Pearl Kong and Bill Wang</p>
+    </div>
+</body>
+{% block script %}{% endblock %}
+</html>

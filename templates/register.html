@@ -1,0 +1,29 @@
+{% extends 'login.html' %}
+{% block login %}
+    <h1>Welcome to CSCB20!</h1>
+    <form method="post">
+        <div id="type-block">
+            <input type="radio" name="type" id="Stu" value="Stu" checked>
+            <label for="Stu">Student</label>
+            <input type="radio" name="type" id="Ins" value="Ins">
+            <label for="Ins">Instructor</label>
+        </div>
+        <div id="user-block">
+            <b>Username (Please use your UTORid)</b><br>
+            <input name="username" id="username" required> <!-- if username alr exists gotta prompt that they alr have acc -->
+        </div>
+        <div id="pw-block">
+            <b>Password</b><br>
+            <input type="password" name="password" id="password" required>
+        </div>
+        <div id="email-block">
+            <b>Email</b><br>
+            <input name="email" id="email" required>
+        </div>
+
+        <button type="submit" value="submit">Register</button>
+
+        <p>{{ error }}</p>
+    </form>
+    <p>Have an account? <a href="login">Login</a></p>
+{% endblock %}

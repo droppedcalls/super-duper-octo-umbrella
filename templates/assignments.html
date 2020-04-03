@@ -1,0 +1,14 @@
+{% extends 'navbar.html' %}
+{% block content %}
+    <h1>Assignments</h1>
+    <p><h3>Assignment 1</h3><hr></p>
+    <p>Relational algebra and SQL queries. Questions may be directed to the discussion board, or to TAs. <br><br>
+    <a href="{{ url_for('static', filename='b20.pdf') }}" target="_blank">PDF</a> | 
+    <a href="{{ url_for('static', filename='b20.pdf') }}" target="_blank">Some starter examples and references</a>
+    <br><br>
+    <b>Due Date: </b> January 26th, 11:59pm<br>
+    *A reminder that <b>no late assignments will be accepted</b>, as per the course syllabus.
+    </p> 
+    <p><h3>Assignment 2</h3><hr></p>
+    <p><h3>Assignment 3</h3><hr></p>
+{% endblock %}

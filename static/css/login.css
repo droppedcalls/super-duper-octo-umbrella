@@ -1,0 +1,70 @@
+* {
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: Oswald;
+    src: url(/static/fonts/Oswald.ttf);
+}
+
+html {
+    height: 100%;
+    font-family: Oswald, sans-serif;
+}
+
+body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-weight: lighter;
+    text-align: center;
+}
+
+h1 {
+    font-weight: normal;
+}
+
+h2 {
+    font-weight: normal;
+}
+
+b {
+    font-weight: normal;
+}
+
+.header {
+    display: block;
+    background-color: #F54E41;
+    padding: 5px;
+}
+
+.login {
+    display: block;
+    margin: auto;
+}
+
+/* Button & text input components ---------------> update*/
+button{
+    background-color: #F54E41;
+    border: #F54E41;
+    color: #ffffff;
+    padding: 3px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 24px;
+    font-family: Oswald;
+    border-radius: 10px;
+}
+
+button:hover{
+    background-color: #F88379;
+    cursor: pointer;
+}
+
+button:active{
+    background-color: #DCDEE3;
+    border: #000;
+    border-width: 3px;
+    color: #F54E41;
+}

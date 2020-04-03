@@ -1,0 +1,120 @@
+/* nav related */
+#nav-col {
+    width: 200px;
+    flex-shrink: 0;
+    background-color: lightgrey;
+    margin: 0 20px 0 0;
+}
+
+.nav-header {
+    text-align: center;
+    background-color: #F54E41;
+    padding: 5px;
+}
+
+#title {
+    margin: 0px;
+}
+
+.links{
+    font-weight: normal;
+}
+
+/* used to detect whether to open hamburger menu or not, can hide element */
+input[type=checkbox] {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    display: none;
+}
+
+/* hide hamburger on bigger screens */
+label {
+    display: none;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* stick to top of page, both needed to ensure browser compatibility */
+nav[role="dropdown"] {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+}
+  
+nav[role="dropdown"] a,
+nav[role="dropdown"] label {
+    text-decoration: none;
+    color: #000;
+    display: block;
+}
+
+nav[role="dropdown"] ul {
+    background-color: lightgrey;
+    padding: 0;
+}
+
+nav[role="dropdown"] ul > li {
+    padding: .55em .55em;
+    cursor: pointer;
+    display: block;
+    border-radius: 0 0 0 10px;
+}
+
+nav[role="dropdown"] ul > li:hover {
+    background-color: #ffffff;
+    color: #F54E41;
+}
+
+nav[role="dropdown"] ul > li:hover > a {
+    color: #F54E41;
+}
+
+@media screen and (max-width: 44em) {
+    .main-columns {
+        flex-direction: column;
+    }
+
+    #nav-col {
+        width: 100%;
+        flex-shrink: 1;
+        /* stick to top of page */
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0px;
+    }
+
+    #title {
+        width: 80%;
+        text-align: center;
+    }
+
+    #tagline {
+        display: none;
+    }
+
+    nav[role="dropdown"] ul {
+        display: none;
+    }
+
+    nav[role="dropdown"] label {
+        display: block;
+        width: 20%;
+        float: left;
+        padding: 10px 20px;
+    }
+
+    nav[role="dropdown"] label:after {
+        content: "\2261";
+        font-size: 1.8em;
+    }
+    
+    nav[role="dropdown"] input[type=checkbox]:checked ~ ul {
+        display: block;
+        background-color: lightgrey;
+    }
+
+    nav[role="dropdown"] input[type=checkbox]:checked ~ ul > li {
+        text-align: center;
+    }
+  }

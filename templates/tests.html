@@ -1,0 +1,17 @@
+{% extends 'navbar.html' %}
+{% block content %}
+    <h1>Tests</h1>
+    <p><h3>Midterm Information</h3></p>
+    <p><hr></p>
+    <p>Midterm content includes everything from Week 1 through Week 5! Here are some sample questions from past year's midterms:</p>
+    <p><a href="{{ url_for('static', filename='b20.pdf') }}" target="_blank">Sample midterm</a> | <a href="{{ url_for('static', filename='b20.pdf') }}" target="_blank">Partial solutions</a><br><br>
+    The midterm is scheduled for: <br>
+    <b>Feburary 4th, 2020<br>
+    10:00-11:30am<br>
+    HL 170</b></p>
+    <p>Please have your TCard with you; any additional aids, as well as electronics are not permitted.</p><br>
+
+    <p><h3>Final Exam Information</h3></p>
+    <p><hr></p>
+    <p>TBA...</p>
+{% endblock %}

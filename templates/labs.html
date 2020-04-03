@@ -1,0 +1,16 @@
+{% extends 'navbar.html' %}
+{% block content %}
+    <h1>Labs / Tutorials</h1>
+    <p><h3>TUT 1</h3></p>
+    <p><hr></p>
+    <p><a href="{{ url_for('static', filename='b20.pdf') }}" target="_blank">Tutorial 1 Instructions</a> — A refresher on Python!</p> 
+    <p><a href="{{ url_for('static', filename='b20.pdf') }}" target="_blank">Tutorial 1 Solutions</a></p>
+    <p><h3>TUT 2</h3></p>
+    <p><hr></p>
+    <p><a href="{{ url_for('static', filename='b20.pdf') }}" target="_blank">Tutorial 2 Instructions</a> — We will doing relational algebra exercises.</p>
+    <p><a href="{{ url_for('static', filename='b20.pdf') }}" target="_blank">Tutorial 2 Solutions</a></p>
+    <p><h3>TUT 3</h3></p>
+    <p><hr></p>
+    <p><a href="{{ url_for('static', filename='b20.pdf') }}" target="_blank">Tutorial 3 Instructions</a> — Please have SQLite installed prior to tutorial.</p>
+    Solutions will be posted after week four ends.
+{% endblock %}

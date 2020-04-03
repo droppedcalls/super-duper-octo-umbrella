@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <title>CSCB20: Introduction to Databases and Web Applications</title>
+
+</head>
+<body>
+    <div class="header">
+        <h1 id="title">CSCB20</h1>
+        <h2 id="tagline">Introduction to Databases and Web Applications</h2>
+    </div>
+
+    <div class="login">
+        {% block login %}
+            <h1>Login</h1>
+            <p>{{ error }}</p>
+            <form method="post">
+                <div class="user-block">
+                    <b>Username</b><br>
+                    <input name="username" id="username" required>
+                </div>
+                <div class="pw-block">
+                    <b>Password</b><br>
+                    <input type="password" name="password" id="password" required>
+                </div>
+
+                <button type="submit" value="submit">Login</button>
+            </form>
+            <input type="hidden" id="errorMsg" value="{{ error }}">
+            <p>Don't have an account? <a href="register">Register</a></p>
+        {% endblock %}
+    </div>
+
+    <div class="footer">
+        <p><a href="https://web.cs.toronto.edu">CS @ UofT</a> | Site design by Pearl Kong and Bill Wang</p>
+    </div>
+</body>
+</html>

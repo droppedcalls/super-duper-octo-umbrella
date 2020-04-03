@@ -1,0 +1,18 @@
+{% extends 'navbar.html' %}
+{% block content %}
+    <h1>Lectures</h1>
+    <h3>Week 1: Introduction, Databases background<hr></h3>
+    <p><a href="{{ url_for('static', filename='b20.pdf') }}" target="_blank">PowerPoint</a></p>
+    <br>
+    <h3>Week 2: Schema diagrams and relational algebra<hr></h3>
+    <p><a href="{{ url_for('static', filename='b20.pdf') }}" target="_blank">PowerPoint</a></p>
+    <br>
+    <h3>Week 3: SQL, MySQL, SQLite<hr></h3>
+    <p><a href="{{ url_for('static', filename='b20.pdf') }}" target="_blank">PowerPoint</a> | <a href="{{ url_for('static', filename='b20.pdf') }}" target="_blank">Installing SQLite</a></p>
+    <br>
+    <h3>Week 4: MySQL queries, creating and editing tables<hr></h3>
+    <p><a href="{{ url_for('static', filename='b20.pdf') }}" target="_blank">PowerPoint</a> | <a href="{{ url_for('static', filename='b20.pdf') }}" target="_blank">Worksheet</a>*<br>
+    *Please do the worksheet prior to coming to class on Monday.</p>
+
+    <br>
+{% endblock %}
