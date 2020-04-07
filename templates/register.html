@@ -2,28 +2,39 @@
 {% block login %}
     <h1>Welcome to CSCB20!</h1>
     <form method="post">
-        <div id="type-block">
+        <div class="cred-block" id="type-block">
             <input type="radio" name="type" id="Stu" value="Stu" checked>
             <label for="Stu">Student</label>
             <input type="radio" name="type" id="Ins" value="Ins">
             <label for="Ins">Instructor</label>
         </div>
-        <div id="user-block">
+        <div class="cred-block" id="user-block">
             <b>Username (Please use your UTORid)</b><br>
-            <input name="username" id="username" required> <!-- if username alr exists gotta prompt that they alr have acc -->
+            <input name="username" id="username" class="cred" required> <!-- if username alr exists gotta prompt that they alr have acc -->
         </div>
-        <div id="pw-block">
+        <div class="cred-block" id="pw-block">
             <b>Password</b><br>
-            <input type="password" name="password" id="password" required>
+            <input type="password" name="password" id="password" class="cred" required>
         </div>
-        <div id="email-block">
+        <div class="cred-block" id="email-block">
             <b>Email</b><br>
-            <input name="email" id="email" required>
+            <input name="email" id="email" class="cred" required>
+        </div>
+        <div class="cred-block" id="first-name-block">
+            <b>First Name</b><br>
+            <input name="first" id="first" class="cred" required>
+        </div>
+        <div class="cred-block" id="last-name-block">
+            <b>Last Name</b><br>
+            <input name="last" id="last" class="cred" required>
         </div>
 
-        <button type="submit" value="submit">Register</button>
+        <button type="submit" value="submit" id="submit">Register</button>
 
         <p>{{ error }}</p>
     </form>
     <p>Have an account? <a href="login">Login</a></p>
+{% endblock %}
+{% block script %}
+    <script src='{{ url_for('static', filename='js/register.js') }}'></script>
 {% endblock %}

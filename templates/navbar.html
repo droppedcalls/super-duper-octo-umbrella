@@ -6,7 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
-    
+    {% block customstyles %}
+    {% endblock %}
+        
     {% if title %}
         <title>{{ title }} - CSCB20: Introduction to Databases and Web Applications</title>
     {% else %}
@@ -28,6 +30,7 @@
                     <li><a href="home">Home</a></li>
                     <li><a href="calendar">Calendar</a></li>
                     <li><a href="news">News</a></li>
+                    <li><a href="team">Course Team</a></li>
                     <li><a href="lectures">Lectures</a></li>
                     <li><a href="labs">Labs</a></li>
                     <li><a href="assignments">Assignments</a></li>
@@ -35,15 +38,14 @@
                     <li><a href="resources">Resources</a></li>
                     <li><a href="https://piazza.com" target="_blank">Piazza &#8599;</a></li>
                     <li><a href="https://markus.utsc.utoronto.ca/" target="_blank">Markus &#8599;</a></li>
-                    <li><a href="feedback">Anon Feedback</a></li>
-                    <li></li>
+                    <li><a href="feedback">Feedback</a></li>
                 </ul>
             </nav>
         </div>
     
         <div class="column" id="content-col">
             <div class="login-status">
-                Hello, <b>{{ session['username'][1] }}</b> <a href="/logout">Logout</a>
+                Hello, <b>{{ session['user']['firstname'] }}</b> <a href="/logout">Logout</a>
             </div>
             <div class="content">
                 {% block content %}{% endblock %}

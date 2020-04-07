@@ -1,4 +1,7 @@
 {% extends 'navbar.html' %}
+{% block customstyles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/calendar.css') }}">
+{% endblock %}
 {% block content %}
     <h1>Course Calendar</h1>
     <div class='iframe-container'>

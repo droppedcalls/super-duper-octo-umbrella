@@ -36,14 +36,39 @@ b {
     display: block;
     background-color: #F54E41;
     padding: 5px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
 }
 
 .login {
     display: block;
     margin: auto;
+    width: 35%;
+    text-align: left;
 }
 
-/* Button & text input components ---------------> update*/
+.cred-block {
+    padding-top: 10px;
+}
+
+.cred {
+    width: 100%;
+    font-size: 0.8em;
+    padding: 0.5em;
+}
+
+@media screen and (max-width: 44em) {
+    .login {
+        width: 90%;
+    }
+
+    .cred {
+        width: 100%;
+    }
+}
+
+/* Button */
 button{
     background-color: #F54E41;
     border: #F54E41;
@@ -55,6 +80,7 @@ button{
     font-size: 24px;
     font-family: Oswald;
     border-radius: 10px;
+    margin-top: 10px;
 }
 
 button:hover{

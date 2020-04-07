@@ -1,0 +1,33 @@
+{% extends 'navbar.html' %}
+{% block customstyles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/team.css') }}">
+{% endblock %}
+{% block content %}
+    <h1>Course Team</h1>
+
+    <h3>Course Instructor<hr></h3>
+    <p><b>Dr. Anna Bretscher</b></p>
+    <p><b>Email: </b><a href="mailto:bretscher@utsc.utoronto.ca">bretscher@utsc.utoronto.ca</a></p>
+    <p><b>Office: </b>IC 493</p>
+    <p><b>Phone: </b>(416) 208-4745</p>
+    <p><b>Lectures: </b>Mondays 9:15-11:00am, HW 216</p>
+    <p><b>Office Hours: </b>Wednesdays 11:00am-12:00pm</p>
+
+    <h3>TAs<hr></h3>
+    <div class='ta-div'>
+        <div class='ta1'>
+            <p><b>Pearl Kong</b></p>
+            <p><b>Email: </b><a href="mailto:pearl@utsc.utoronto.ca">pearl@utsc.utoronto.ca</a></p>
+            <p><b>Office: </b>IC 400A</p>
+            <p><b>Office Hours: </b>Tuesdays 2:00-3:00pm</p>
+        </div>
+        
+        <div class='ta2'>
+            <p><b>Bill Wang</b></p>
+            <p><b>Email: </b><a href="mailto:bill@utsc.utoronto.ca">bill@utsc.utoronto.ca</a></p>
+            <p><b>Office: </b>IC 400A</p>
+            <p><b>Office Hours: </b>Fridays 11:00am-12:00pm</p>
+        </div>
+    </div>
+    
+{% endblock %}

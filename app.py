@@ -1,6 +1,8 @@
 
-from flask import Flask, render_template, session, g, request, redirect, url_for #do we need g?
+from flask import Flask, render_template, session, g, request, redirect, url_for
+from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
+
 app = Flask(__name__)
 app.secret_key = 'billpearl'.encode('utf-8')
 
@@ -16,12 +18,6 @@ def get_db():
         # otherwise, create a database to use
         db = g._database = sqlite3.connect(DATABASE)
     return db
-
-""" # converts the tuples from get_db() into dictionaries
-# (don't worry if you don't understand this code)
-def make_dicts(cursor, row):
-    return dict((cursor.description[idx][0], value)
-                for idx, value in enumerate(row)) """
 
 # given a query, executes and returns the result
 # (don't worry if you don't understand this code)
@@ -40,6 +36,16 @@ def write_db(query, args=()):
     except sqlite3.Error as e:
         return str(e)
 
+
+def write_db_many(query, values=()):
+    db = get_db()
+    try:
+        cur = db.executemany(query, values)
+        db.commit()
+        return cur.lastrowid
+    except sqlite3.Error as e:
+        return str(e)
+
 ### START OF FLASK METHODS ###
 # this function gets called when the Flask app shuts down
 # tears down the database connection
@@ -50,48 +56,51 @@ def close_connection(exception):
         # close the database if we are connected to it
         db.close()
 
-@app.route('/', methods=['GET', 'POST'])
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/', methods=['GET','POST'])
+@app.route('/login', methods=['GET','POST'])
 def login():
     error = ''
     if request.method == 'POST':
-        sql = 'select username, password, firstname, user_type from user_info'
-        creds = query_db(sql)
+        sql = 'select username, password, firstname, user_type from user_info where username=\'' + request.form['username'] + '\''
+        user = query_db(sql)[0]
 
-        for cred in creds:
-            if cred[0] == request.form['username'] and cred[1] == request.form['password']:
-                    session['username'] = [request.form['username'], cred[2], cred[3]]
-                    return redirect(url_for('index'))
+        if user[0] == request.form['username'] and check_password_hash(user[1], request.form['password']):
+            session['user'] = {'username': request.form['username'], 'firstname': user[2], 'type': user[3]}
+            return redirect(url_for('index'))
 
         error = 'Incorrect username or password'
-    elif 'username' in session:
+    elif 'user' in session:
         return redirect(url_for('index'))
     elif len(request.args) > 0 and request.args.get('f') == 'register':
         error = 'Account created successfully! Please log in to access content.'
 
-    return render_template('login.html', error = error)
+    return render_template('login.html', error=error)
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET','POST'])
 def register():
     error = ''
     if request.method == 'POST':
         sql = ('insert into user_info values (\'' +
-                request.form['username'] + '\',\'' + request.form['password'] + '\',\'' +
-                request.form['email'] + '\',\'' + request.form['type'] + '\')')
+                request.form['username'] + '\',\'' + generate_password_hash(request.form['password']) + '\',\'' +
+                request.form['email'] + '\',\'' + request.form['first'] + '\',\'' +
+                request.form['last'] + '\',\'' + request.form['type'] + '\')')
+
         msg = write_db(sql)
 
         if type(msg) == int:
             return redirect(url_for('login', f='register'))
-        elif 'constraint failed' in msg:
+        elif 'constraint failed' in msg and 'user_info.username' in msg:
             error = 'User already exists! If you forgot your password, please contact an instructor.'
+        elif 'constraint failed' in msg and 'user_info.email' in msg:
+            error = 'User with that email already exists! If you forgot your password, please contact an instructor.'
         else:
             error = 'Unknown error. Please contact an instructor.'
     
-    return render_template('register.html', error=error)
+    return render_template('register.html', error = error)
 
 @app.route('/logout')
 def logout():
-	session.pop('username', None)
+	session.pop('user', None)
 	return redirect(url_for('login'))
 
 @app.route('/home')
@@ -99,42 +108,73 @@ def index():
     if len(session) == 0:
         return redirect(url_for('login'))
 
-    return render_template('index.html')
+    return render_template('index.html', title = 'Home')
 
 @app.route('/calendar')
 def calendar():
-    return render_template('calendar.html')
+    return render_template('calendar.html', title = 'Calendar')
 
 @app.route('/news') #if time permits, can make it not hardcoded
 def news():
-    return render_template('news.html')
+    return render_template('news.html', title = 'News')
+
+@app.route('/team')
+def team():
+    return render_template('team.html', title = 'Course Team')
 
 @app.route('/lectures')
 def lec():
-    return render_template('lectures.html')
+    return render_template('lectures.html', title='Lectures')
 
 @app.route('/labs')
 def labs():
-    return render_template('labs.html')
+    return render_template('labs.html', title='Labs')
 
 @app.route('/assignments')
 def assignments():
-    return render_template('assignments.html')
+    return render_template('assignments.html', title='Assignments')
 
 @app.route('/tests')
 def tests():
-    return render_template('tests.html')
+    return render_template('tests.html', title='Tests')
 
 @app.route('/resources')
 def res():
-    return render_template('resources.html')
+    return render_template('resources.html', title='Resources')
 
-@app.route('/feedback')
+q_map = {1: 'What do you like about the instructor teaching?',
+         2: 'What do you recommend the instructor to do to improve their teaching?',
+         3: 'What do you like about the labs?',
+         4: 'What do you recommend the lab instructors to do to improve their lab teaching?'}
+
+@app.route('/feedback', methods=['GET','POST'])
 def feedback():
-    if session['username'][1] == 'Ins':
-        return render_template('view_feedback.html')
+    title = 'Feedback'
+    ins_list = query_db('select username, firstname, lastname from user_info where user_type = \'Ins\'')
+
+    if request.method == 'POST': #will only be used for students
+        feedback_id = query_db('select max(feedback_id) from feedback')[0][0]
+
+        ans_list = []
+        for key in request.form:
+            if key != 'ins' and request.form[key] != '':
+                ans_list.append((request.form['ins'], feedback_id + 1, int(key), request.form[key]))
+
+        write_db_many('insert into feedback values(?,?,?,?)', ans_list)
+
+        return render_template('feedback.html', title=title, ins_list=ins_list, q_map=q_map, submitted=1)
+    if session['user']['type'] == 'Ins':
+        fb_list = query_db('select q_num, response from feedback where username=\'' + session['user']['username'] + '\'')
+        fb_mapped = {}
+        for entry in fb_list:
+            if entry[0] in fb_mapped.keys():
+                fb_mapped[entry[0]].append(entry[1])
+            else:
+                fb_mapped[entry[0]] = [entry[1]]
+
+        return render_template('view_feedback.html', title=title, q_map=q_map, fb_list=fb_mapped)
     else:
-        return render_template('feedback.html')
+        return render_template('feedback.html', title=title, ins_list=ins_list, q_map=q_map)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0') #allow for external devices to access

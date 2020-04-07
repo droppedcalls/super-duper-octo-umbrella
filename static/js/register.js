@@ -1,13 +1,19 @@
-var elements = document.getElementsByTagName('a');
-for (var i = 0; i < elements.length; i++) {
-    if (elements[i].className == 'instructor') { 
-         elements[i].onclick = function() { 
-           document.getElementById("id-block").style.display = "none";
-        }
+var email = document.getElementById('email');
+var form = document.getElementsByTagName('form')[0];
+
+var err = document.getElementById('email-err')
+
+email.oninput = () => {
+    if (! /.*@.*\..*$/.test(email.value)) {
+        email.setCustomValidity('Please input a valid email address');
     } else {
-        elements[i].onclick = function() {
-            document.getElementById("id-block").style.display = "block";
-        }
+        email.setCustomValidity('');
     }
-}
-//console.log(elements);
+};
+
+form.onsubmit = () => {
+    console.log(/.*@.*\..*$/.test(email.value))
+    if (! /.*@.*\..*$/.test(email.value)) {
+        return false;
+    }
+};

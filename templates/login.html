@@ -17,20 +17,19 @@
     <div class="login">
         {% block login %}
             <h1>Login</h1>
-            <p>{{ error }}</p>
             <form method="post">
-                <div class="user-block">
+                <div class="cred-block" id="user-block">
                     <b>Username</b><br>
-                    <input name="username" id="username" required>
+                    <input name="username" id="username" class="cred" required>
                 </div>
-                <div class="pw-block">
+                <div class="cred-block" id="pw-block">
                     <b>Password</b><br>
-                    <input type="password" name="password" id="password" required>
+                    <input type="password" name="password" id="password" class="cred" required>
                 </div>
 
                 <button type="submit" value="submit">Login</button>
             </form>
-            <input type="hidden" id="errorMsg" value="{{ error }}">
+            <p>{{ error }}</p>
             <p>Don't have an account? <a href="register">Register</a></p>
         {% endblock %}
     </div>
@@ -39,4 +38,5 @@
         <p><a href="https://web.cs.toronto.edu">CS @ UofT</a> | Site design by Pearl Kong and Bill Wang</p>
     </div>
 </body>
+{% block script %}{% endblock %}
 </html>

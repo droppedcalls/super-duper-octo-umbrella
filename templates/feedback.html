@@ -1,12 +1,37 @@
 {% extends 'navbar.html' %}
+{% block customstyles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/feedback.css') }}">
+{% endblock %}
 {% block content %}
     <h1>Feedback</h1>
-    <p>Work in progress...</p>
 
-   <!--  <form method="POST">
-        <textarea id="anonfeedback"></textarea><br><br>
-        <button type="button" id="feedback-submit" value="submit">Submit</button>
+    {% if submitted == 1 %}
         <p>Thank you for your submission.</p>
-    </form> -->
-    
+        <a href='feedback?submitted=0'>Write another submission</a> | <a href='home'>Home</a>
+    {% else %}
+        <p>All feedback will be submitted anonymously. Please be respectful in your feedback.</p>
+
+        <form method="POST">
+            <div class="q" id="ins-selection">
+                Please select which instructor you would like to give feedback for:
+                <select name="ins" id="ins">
+                    {% for ins in ins_list %}
+                        <option value="{{ ins[0] }}">{{ ins[1] }} {{ ins[2] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% for qnum in q_map %}
+                <div class='q' id='q{{ qnum }}-block'>
+                    <b>{{ q_map[qnum] }}</b>
+                    <textarea class="ans" name="{{ qnum }}" id="{{ qnum }}"></textarea>
+                </div>
+                
+            {% endfor %}
+            <div class="q" id="err"></div>
+            <button type="submit" value="submit" id="submit">Submit</button>
+        </form>
+    {% endif %}
+{% endblock %}
+{% block script %}
+    <script src='{{ url_for('static', filename='js/feedback.js') }}'></script>
 {% endblock %}

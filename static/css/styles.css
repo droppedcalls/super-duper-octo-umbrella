@@ -73,8 +73,8 @@ body {
     text-align: center;
 }
 
-/* Button & text input components ---------------> update*/
-button{
+/* Buttons */
+button {
     background-color: #F54E41;
     border: #F54E41;
     color: #ffffff;
@@ -87,43 +87,14 @@ button{
     border-radius: 10px;
 }
 
-button:hover{
+button:hover {
     background-color: #F88379;
     cursor: pointer;
 }
 
-button:active{
+button:active {
     background-color: #DCDEE3;
     border: #000;
     border-width: 3px;
     color: #F54E41;
-}
-
-textarea{
-    width: 100%;
-    height: 5em;
-    border: 2px solid #707070;
-}
-
-/* for responsive calendar */
-.iframe-container {
-    overflow: hidden;
-    padding-top: 50%;
-    position: relative;
-}
-
-.iframe-container iframe {
-    border: 0;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-}
-
-
-@media screen and (max-width: 44em) {
-    .iframe-container {
-        padding-top: 90%;
-    }
 }

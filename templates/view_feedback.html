@@ -1,12 +1,23 @@
 {% extends 'navbar.html' %}
+{% block customstyles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/feedback.css') }}">
+{% endblock %}
 {% block content %}
-    <h1>Anonymous Feedback</h1>
-    <p>View here!</p>
-
-   <!--  <form method="POST">
-        <textarea id="anonfeedback"></textarea><br><br>
-        <button type="button" id="feedback-submit" value="submit">Submit</button>
-        <p>Thank you for your submission.</p>
-    </form> -->
+    <h1>Feedback</h1>
     
+    {% for qnum in q_map %}
+        <div class="question" id="q{{ qnum }}">
+            <span class="indicator">&#9654;</span>
+            <b>{{ q_map[qnum] }}</b>
+            <ul class="ans-list" id="ans-q{{ qnum }}">
+                {% for entry in fb_list[qnum] %}
+                    <li>{{ entry }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+
+{% endblock %}
+{% block script %}
+    <script src='{{ url_for('static', filename='js/view_feedback.js') }}'></script>
 {% endblock %}

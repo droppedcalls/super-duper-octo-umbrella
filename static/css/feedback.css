@@ -1,0 +1,39 @@
+textarea {
+    width: 98%;
+    height: 5em;
+    border: 2px solid #707070;
+    resize: none;
+    margin-top: 1.5%;
+}
+
+.q {
+    padding-bottom: 2.5%;
+}
+
+.ans-list {
+    display: none;
+}
+
+.question {
+    cursor: pointer;
+    margin-bottom: 5px;
+    user-select: none; /* supported by Chrome and Opera */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+#ins {
+    margin-left: 5px;
+}
+
+#err {
+    display: none;
+}
+
+@media screen and (max-width: 44em) {
+    textarea {
+        width: 100%;
+    }
+}
