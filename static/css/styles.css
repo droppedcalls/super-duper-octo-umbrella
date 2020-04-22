@@ -74,7 +74,7 @@ body {
 }
 
 /* Buttons */
-button {
+button[type=submit] {
     background-color: #F54E41;
     border: #F54E41;
     color: #ffffff;
@@ -87,14 +87,28 @@ button {
     border-radius: 10px;
 }
 
-button:hover {
+button[type=submit]:hover {
     background-color: #F88379;
     cursor: pointer;
 }
 
-button:active {
+button[type=submit]:active {
     background-color: #DCDEE3;
     border: #000;
     border-width: 3px;
     color: #F54E41;
+}
+
+textarea {
+    width: 98%;
+    height: 5em;
+    border: 2px solid #707070;
+    resize: none;
+    margin-top: 1.5%;
+}
+
+@media screen and (max-width: 44em) {
+    textarea {
+        width: 100%;
+    }
 }

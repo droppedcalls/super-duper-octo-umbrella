@@ -1,0 +1,107 @@
+table {
+    width: 80%;
+}
+
+button[type=submit] {
+    margin-top: 5px;
+}
+
+#confirmation {
+    display: block;
+}
+
+#eval {
+    margin-left: 5px;
+}
+
+#req-details {
+    padding-bottom: 2.5%;
+}
+
+.reqs {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.req-item {
+    background-color: lightgrey;
+    border-radius: 10px;
+    padding: 3px 20px;
+    width: 300px;
+    display: inline-block;
+    margin: 0 10px 10px 0;
+}
+
+.eval-content {
+    display: none;
+}
+
+.new-eval {
+    display: none;
+}
+
+.edit-eval {
+    display: none;
+}
+
+.new-eval-input {
+    width: 50%;
+    font-size: 0.8em;
+    padding: 0.5em;
+}
+
+.eval-tab {
+    background-color: lightgrey;
+    border: lightgrey;
+    color: #ffffff;
+    padding: 3px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    font-family: Oswald;
+}
+
+.eval-tab:hover {
+    background-color: #F88379;
+    cursor: pointer;
+}
+
+.eval-tab:active {
+    background-color: #DCDEE3;
+    border: #000;
+    border-width: 3px;
+    color: #F54E41;
+}
+
+.delete {
+    background-color: #F54E41;
+    border: white;
+    color: white;
+    font-size: 1em;
+    font-family: Oswald;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+.delete:hover {
+    background-color: #F88379;
+    cursor: pointer;
+}
+
+.delete:active {
+    background-color: #DCDEE3;
+    border: #000;
+    border-width: 3px;
+    color: #F54E41;
+}
+
+@media screen and (max-width: 44em) {
+    table {
+        width: 100%;
+    }
+
+    .req-item {
+        width: 100%;
+    }
+}

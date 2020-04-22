@@ -1,8 +1,45 @@
 {% extends 'navbar.html' %}
+{% block customstyles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/grades.css') }}">
+{% endblock %}
 {% block content %}
-    {% if error != '' %}
-        <h1>You do not have permission to access this page.</h1>
-    {% else %}
-        ok actually put ur code here
-    {% endif %}
+    <h3>{{ session['user']['firstname'] }}, here are your grades:</h3>
+    <table>
+        <tr>
+            <th>Evaluation</th>
+            <th>Grade</th>
+        </tr>
+        <hr>
+        {% for entry in table_builder %}
+            <tr>
+                <td>{{entry[1]}}</td>
+                <td>{{entry[2]}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <hr>
+
+    <h3>Unexpected grade? Submit a remark request here.</h3>
+    <p>Include the name of the evaluation, any specific question(s) that you believe was graded incorrectly, and any supporting rationale.</p>
+    <p><b>*Please submit separate remark requests for each assignment, if needed.</b></p>
+    <form id="submit_remark_request" method="POST"> 
+        Evaluation:
+        <select name="eval" id="eval">
+            {% for entry in table_builder %}
+                <option value="{{ entry[1] }}">{{ entry[1] }}</option>
+            {% endfor %}
+        </select>
+        <div id="req-details">
+            <textarea name='remark_request' id="remark_request" required></textarea>
+        </div>
+        <button type=submit name="submit" id="submit" value="submit">Submit</button>
+    </form>
+    
+
+    <div id="confirmation">
+        <p>{{ send_message }}</p>
+    </div>
+{% endblock %}
+{% block script %}
+    <script src='{{ url_for('static', filename='js/grades.js') }}'></script>
 {% endblock %}

@@ -62,13 +62,17 @@ def login():
     error = ''
     if request.method == 'POST':
         sql = 'select username, password, firstname, user_type from user_info where username=\'' + request.form['username'] + '\''
-        user = query_db(sql)[0]
+        try:
+            user = query_db(sql)[0]
+        except IndexError:
+            error = 'User does not exist! Please try again'
+            return render_template('login.html', error=error)
 
         if user[0] == request.form['username'] and check_password_hash(user[1], request.form['password']):
             session['user'] = {'username': request.form['username'], 'firstname': user[2], 'type': user[3]}
             return redirect(url_for('index'))
-
-        error = 'Incorrect username or password'
+        else:
+            error = 'Incorrect username or password'
     elif 'user' in session:
         return redirect(url_for('index'))
     elif len(request.args) > 0 and request.args.get('f') == 'register':
@@ -137,6 +141,62 @@ def assignments():
 @app.route('/tests')
 def tests():
     return render_template('tests.html', title='Tests')
+
+@app.route('/grades', methods=['GET', 'POST', 'DEL'])
+def grades():
+    #pull the entire grades table
+    student_grades = query_db('select * from grades')
+    evals = [ eval[0] for eval in query_db('select distinct eval from grades') ]
+    #show a different set of information if the user is an instructor
+    if session['user']['type'] == 'Ins':
+        remark_check = 'There are no remark requests at this moment.'
+        get_remarks = query_db('select distinct * from remark')
+        delete_msg = ''
+        if get_remarks != None:
+            remark_check = ''
+
+        if request.method == 'POST' and request.form['remark'] == 'no':
+            if request.form['eval-name'] in evals and request.form['username'] in [ entry[0] for entry in student_grades ]:
+                sql = ('update grades set grade=\'' + request.form['grade'] + '\'' ' where username=\'' +
+                    request.form['username'] + '\' and eval=\'' + request.form['eval-name'] + '\'')
+            else:
+                sql = ('insert into grades values (\'' +
+                    request.form['username'] + '\',\'' + request.form['eval-name'] + '\',\'' +
+                    request.form['grade'] + '\')')
+
+            msg = write_db(sql)
+            if type(msg) == int:
+                return redirect(url_for('grades'))
+            elif 'constraint failed' in msg:
+                ins_err = 'Entry already exists!'
+                return render_template('grades_instructor.html', student_grades = student_grades, evals = evals, remark_check = remark_check, get_remarks = get_remarks, ins_err=ins_err)
+        elif request.method == 'POST' and request.form['remark'] == 'yes':
+            sql = ('delete from remark where username=\'' +
+                    request.form['username'] + '\' and eval=\'' + request.form['eval-name'] + '\' and reason=\'' +
+                    request.form['reason'] + '\'')
+            
+            msg = write_db(sql)
+            return redirect(url_for('grades'))
+
+        return render_template('grades_instructor.html', student_grades = student_grades, evals = evals, remark_check = remark_check, get_remarks = get_remarks, ins_err='')
+        
+    #set of information for students
+    else:
+        send_message = ''
+        table_builder = []
+        for grade_entry in student_grades:
+            if grade_entry[0] == session['user']['username']:
+                table_builder.append(grade_entry)
+
+        #remark submission
+        if request.method == 'POST':
+            sql = ('insert into remark values (\'' +
+                    session['user']['username'] + '\',\'' + request.form['eval'] + '\',\'' + request.form['remark_request'] + '\')')
+            msg = write_db(sql)
+            app.logger.info(msg)
+            send_message = 'Thank you for your request.'
+
+        return render_template('grades.html', table_builder = table_builder, send_message = send_message)
 
 @app.route('/resources')
 def res():

@@ -4,20 +4,18 @@
 {% endblock %}
 {% block content %}
     <h1>Feedback</h1>
-    
+
     {% for qnum in q_map %}
         <div class="question" id="q{{ qnum }}">
-            <span class="indicator">&#9654;</span>
             <b>{{ q_map[qnum] }}</b>
-            <ul class="ans-list" id="ans-q{{ qnum }}">
+            <div class="feedback-items">
                 {% for entry in fb_list[qnum] %}
-                    <li>{{ entry }}</li>
+                    <div class="feedback-entry">
+                        {{ entry }}
+                    </div>
                 {% endfor %}
-            </ul>
+            </div>
         </div>
     {% endfor %}
 
-{% endblock %}
-{% block script %}
-    <script src='{{ url_for('static', filename='js/view_feedback.js') }}'></script>
 {% endblock %}

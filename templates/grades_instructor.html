@@ -1,0 +1,110 @@
+{% extends 'navbar.html' %}
+{% block customstyles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/grades.css') }}">
+{% endblock %}
+{% block content %}
+    <!-- Create horizontal tab buttons-->
+    <h1>Grades</h1>
+    <div class='tab'>
+        {% for eval in evals %}
+            {%- if loop.first -%}
+                <button class='eval-tab' id='active'>{{ eval }}</button>
+            {%- else -%}
+                <button class='eval-tab' id='inactive'>{{ eval }}</button>
+            {%- endif -%}
+        {% endfor %}
+    </div>
+    <hr>
+
+    {% for eval in evals %}
+        <div id="{{ eval }}" class="eval-content">
+            <table class="eval-table">
+                <tr>
+                    <th>UTORid</th>
+                    <th>Grade</th>
+                </tr>
+                {% for record in student_grades %}
+                    {% if record[1] == eval %}
+                        <tr>
+                            <td>{{ record[0] }}</td>
+                            <td>{{ record[2] }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+            <hr>
+        </div>
+    {% endfor %}
+    <div class="new-eval">
+        <form id="submit-eval" method="POST">
+            <input type="hidden" id="remark" name="remark" value="no">
+            <div class="new-details" id="eval-name-block">
+                <b>Evaluation Name</b><br>
+                <input name="eval-name" id="eval-name" class="new-eval-input" required>
+            </div>
+            <p><b>Entry:</b></p>
+            <div class="new-details" id="username-block">
+                <b>UTORid</b><br>
+                <input name="username" id="username" class="new-eval-input" required>
+            </div>
+            <div class="new-details" id="grade-block">
+                <b>Grade</b><br>
+                <input name="grade" id="grade" class="new-eval-input" required>
+            </div>
+            <button type=submit id="submit">Add Entry</button>
+        </form>
+    </div>
+    <div class="edit-eval">
+        <form id="edit-eval" method="POST">
+            <p><b>Edit:</b></p>
+            <input type="hidden" id="remark" name="remark" value="no">
+            <div class="new-details" id="eval-name-block">
+                <b>Evaluation Name</b><br>
+                <select name="eval-name" id="eval-name">
+                    {% for eval in evals %}
+                        <option value="{{ eval }}">{{ eval }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="new-details" id="username-block">
+                <b>UTORid</b><br>
+                <input name="username" id="username" class="new-eval-input" required>
+            </div>
+            <div class="new-details" id="grade-block">
+                <b>Grade</b><br>
+                <input name="grade" id="grade" class="new-eval-input" required>
+            </div>
+            <button type=submit id="submit">Add Entry</button>
+        </form>
+    </div>
+    <div id='ins-err'>
+        <p><b>{{ ins_err }}</b></p>
+    </div>
+    <div class='entry-management'>
+        <button type=submit id="add-entry">New</button>
+        <button type=submit id="edit-entry">Edit</button>
+    </div>
+
+    <!--Instructor Remark Viewing-->
+    <h3>Pending Remark Requests</h3>
+    {{ remark_check }}
+    <div class='reqs'>
+        {% for req in get_remarks %}
+            <form class="req-del" id='form{{req}}' method="POST">
+                <input type="hidden" id="remark" name="remark" value="yes">
+                <input type="hidden" id="username" name="username" value="{{req[0]}}">
+                <input type="hidden" id="eval-name" name="eval-name" value="{{req[1]}}">
+                <input type="hidden" id="reason" name="reason" value="{{req[2]}}">
+            </form>
+            <div id='{{req}}' class='req-item' form='form{{req}}'>
+                <p><b>Student ID:</b> {{req[0]}}</p>
+                <p><b>Evaluation:</b> {{req[1]}}<br></p>
+                <p><b>Request:</b> {{req[2]}}<br></p>
+                <button type=button class='delete' name='delete' id='delete' form="form{{req}}" value="submit">Delete</button>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block script %}
+    <script src='{{ url_for('static', filename='js/grades_instructor.js') }}'></script>
+{% endblock %}

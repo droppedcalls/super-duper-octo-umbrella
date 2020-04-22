@@ -1,27 +1,18 @@
-textarea {
-    width: 98%;
-    height: 5em;
-    border: 2px solid #707070;
-    resize: none;
-    margin-top: 1.5%;
-}
-
 .q {
     padding-bottom: 2.5%;
 }
 
-.ans-list {
-    display: none;
+.question {
+    margin-bottom: 5px;
 }
 
-.question {
-    cursor: pointer;
-    margin-bottom: 5px;
-    user-select: none; /* supported by Chrome and Opera */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
+.feedback-entry {
+    background-color: lightgrey;
+    border-radius: 10px;
+    padding: 3px 20px;
+    width: 300px;
+    display: inline-block;
+    margin: 5px 10px 10px 0;
 }
 
 #ins {
@@ -30,10 +21,4 @@ textarea {
 
 #err {
     display: none;
-}
-
-@media screen and (max-width: 44em) {
-    textarea {
-        width: 100%;
-    }
 }
